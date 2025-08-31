@@ -2,17 +2,20 @@ import { type FormEvent, useState } from "react";
 import { Loader, Placeholder } from "@aws-amplify/ui-react";
 import "./App.css";
 import { Amplify } from "aws-amplify";
-import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
+
 Amplify.configure(outputs);
-const amplifyClient = generateClient<Schema>({
+
+const amplifyClient = generateClient({
  authMode: "userPool",
 });
+
 function App() {
  const [result, setResult] = useState<string>("");
  const [loading, setLoading] = useState(false);
+ 
  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
  event.preventDefault();
  setLoading(true);
@@ -33,6 +36,7 @@ amplifyClient.queries.askBedrock({
  setLoading(false);
  }
  };
+ 
  return (
  <div className="app-container">
  <div className="header-container">
